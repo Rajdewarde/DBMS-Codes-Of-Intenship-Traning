@@ -1,0 +1,56 @@
+-- ============================================
+-- SQL TASK : StudentMaster & StudentMarks
+-- ============================================
+
+-- 1. Create StudentMaster Table
+CREATE TABLE StudentMaster (
+    StudentId INT PRIMARY KEY,
+    StudentName VARCHAR(50),
+    Gender VARCHAR(10),
+    Age INT,
+    City VARCHAR(50)
+);
+
+-- 2. Create StudentMarks Table
+CREATE TABLE StudentMarks (
+    MarkId INT PRIMARY KEY,
+    StudentId INT,
+    SubjectName VARCHAR(50),
+    Marks INT,
+    FOREIGN KEY (StudentId) REFERENCES StudentMaster(StudentId)
+);
+
+-- 3. Insert 5 Dummy Records into StudentMaster
+INSERT INTO StudentMaster
+(StudentId, StudentName, Gender, Age, City)
+VALUES
+(1, 'Raj Dewarde', 'Male', 18, 'Kolhapur'),
+(2, 'Amit Patil', 'Male', 19, 'Pune'),
+(3, 'Sneha Joshi', 'Female', 18, 'Mumbai'),
+(4, 'Pooja Shinde', 'Female', 19, 'Sangli'),
+(5, 'Rohit Jadhav', 'Male', 18, 'Satara');
+
+-- 4. Insert 5 Dummy Records into StudentMarks
+INSERT INTO StudentMarks
+(MarkId, StudentId, SubjectName, Marks)
+VALUES
+(101, 1, 'DBMS', 95),
+(102, 2, 'Java', 96),
+(103, 3, 'Python', 90),
+(104, 4, 'Computer Network', 92),
+(105, 5, 'Operating System', 97);
+
+-- 5. INNER JOIN Query
+-- Display all student details with subject name and marks
+
+SELECT
+    StudentMaster.StudentId,
+    StudentMaster.StudentName,
+    StudentMaster.Gender,
+    StudentMaster.Age,
+    StudentMaster.City,
+    StudentMarks.SubjectName,
+    StudentMarks.Marks
+FROM StudentMaster
+INNER JOIN StudentMarks
+ON StudentMaster.StudentId = StudentMarks.StudentId;
