@@ -1,1 +1,240 @@
+-- ==========================================
+-- DBMS COMPLETE SQL PRACTICAL
+-- ==========================================
 
+-- 1. Create Database
+CREATE DATABASE CollegeDB;
+
+USE CollegeDB;
+
+
+-- 2. Create Student Table
+CREATE TABLE Student (
+    StudentId INT PRIMARY KEY,
+    StudentName VARCHAR(50),
+    Gender VARCHAR(10),
+    Age INT,
+    City VARCHAR(50)
+);
+
+
+-- 3. Insert Records
+INSERT INTO Student
+(StudentId, StudentName, Gender, Age, City)
+VALUES
+(1, 'Raj', 'Male', 18, 'Kolhapur'),
+(2, 'Amit', 'Male', 19, 'Pune'),
+(3, 'Sneha', 'Female', 18, 'Mumbai'),
+(4, 'Pooja', 'Female', 19, 'Sangli'),
+(5, 'Rohit', 'Male', 18, 'Satara');
+
+
+-- 4. Display All Records
+SELECT * FROM Student;
+
+
+-- 5. Display Selected Columns
+SELECT StudentName, City
+FROM Student;
+
+
+-- 6. WHERE Clause
+SELECT * FROM Student
+WHERE City = 'Kolhapur';
+
+
+-- 7. Age Condition
+SELECT * FROM Student
+WHERE Age = 18;
+
+
+-- 8. UPDATE
+UPDATE Student
+SET City = 'Pune'
+WHERE StudentId = 1;
+
+
+-- 9. DELETE
+DELETE FROM Student
+WHERE StudentId = 5;
+
+
+-- 10. ORDER BY ASC
+SELECT * FROM Student
+ORDER BY StudentName ASC;
+
+
+-- 11. ORDER BY DESC
+SELECT * FROM Student
+ORDER BY Age DESC;
+
+
+-- 12. LIKE Operator
+SELECT * FROM Student
+WHERE StudentName LIKE 'R%';
+
+
+-- 13. LIKE Operator
+SELECT * FROM Student
+WHERE StudentName LIKE '%a%';
+
+
+-- 14. BETWEEN Operator
+SELECT * FROM Student
+WHERE Age BETWEEN 18 AND 20;
+
+
+-- 15. IN Operator
+SELECT * FROM Student
+WHERE City IN ('Pune', 'Mumbai', 'Kolhapur');
+
+
+-- 16. DISTINCT
+SELECT DISTINCT City
+FROM Student;
+
+
+-- 17. COUNT
+SELECT COUNT(*) AS TotalStudents
+FROM Student;
+
+
+-- 18. MAX
+SELECT MAX(Age) AS MaximumAge
+FROM Student;
+
+
+-- 19. MIN
+SELECT MIN(Age) AS MinimumAge
+FROM Student;
+
+
+-- 20. AVG
+SELECT AVG(Age) AS AverageAge
+FROM Student;
+
+
+-- 21. GROUP BY
+SELECT City, COUNT(*) AS TotalStudents
+FROM Student
+GROUP BY City;
+
+
+-- 22. HAVING
+SELECT City, COUNT(*) AS TotalStudents
+FROM Student
+GROUP BY City
+HAVING COUNT(*) >= 1;
+
+
+-- 23. ALTER TABLE - ADD COLUMN
+ALTER TABLE Student
+ADD Email VARCHAR(100);
+
+
+-- 24. Update Email
+UPDATE Student
+SET Email = 'raj@gmail.com'
+WHERE StudentId = 1;
+
+
+-- 25. Create Marks Table
+CREATE TABLE Marks (
+    MarkId INT PRIMARY KEY,
+    StudentId INT,
+    SubjectName VARCHAR(50),
+    Marks INT,
+    FOREIGN KEY (StudentId)
+    REFERENCES Student(StudentId)
+);
+
+
+-- 26. Insert Marks
+INSERT INTO Marks
+(MarkId, StudentId, SubjectName, Marks)
+VALUES
+(101, 1, 'DBMS', 85),
+(102, 2, 'Java', 78),
+(103, 3, 'Python', 90),
+(104, 4, 'DCN', 82);
+
+
+-- 27. Display Marks
+SELECT * FROM Marks;
+
+
+-- 28. INNER JOIN
+SELECT
+    Student.StudentId,
+    Student.StudentName,
+    Student.Gender,
+    Student.Age,
+    Student.City,
+    Marks.SubjectName,
+    Marks.Marks
+FROM Student
+INNER JOIN Marks
+ON Student.StudentId = Marks.StudentId;
+
+
+-- 29. LEFT JOIN
+SELECT
+    Student.StudentName,
+    Marks.SubjectName,
+    Marks.Marks
+FROM Student
+LEFT JOIN Marks
+ON Student.StudentId = Marks.StudentId;
+
+
+-- 30. RIGHT JOIN
+SELECT
+    Student.StudentName,
+    Marks.SubjectName,
+    Marks.Marks
+FROM Student
+RIGHT JOIN Marks
+ON Student.StudentId = Marks.StudentId;
+
+
+-- 31. Marks Greater Than Average
+SELECT *
+FROM Marks
+WHERE Marks > (
+    SELECT AVG(Marks)
+    FROM Marks
+);
+
+
+-- 32. Highest Marks
+SELECT MAX(Marks) AS HighestMarks
+FROM Marks;
+
+
+-- 33. Lowest Marks
+SELECT MIN(Marks) AS LowestMarks
+FROM Marks;
+
+
+-- 34. Average Marks
+SELECT AVG(Marks) AS AverageMarks
+FROM Marks;
+
+
+-- 35. Count Students
+SELECT COUNT(*) AS TotalStudents
+FROM Student;
+
+
+-- 36. Final JOIN Result
+SELECT
+    S.StudentId,
+    S.StudentName,
+    S.Gender,
+    S.Age,
+    S.City,
+    M.SubjectName,
+    M.Marks
+FROM Student AS S
+INNER JOIN Marks AS M
+ON S.StudentId = M.StudentId;
